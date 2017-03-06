@@ -53,7 +53,7 @@ $(document).ready(function() {
 
             var api_key = "dc6zaTOxFJmzC";
             var limit = 10;
-            var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + myAnimal + "&limit=" + limit + "&api_key=" + api_key;
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + myAnimal + "&limit=" + limit + "&api_key=" + api_key;
 
             $.ajax({
                 url: queryURL,
