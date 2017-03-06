@@ -1,13 +1,93 @@
-* {
+/** {
     background-color: rgba(0, 0, 0, .10) !important;
     border: 1px solid red !important;
-}
+}*/
 
 body {
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #eee;
 }
 
 .flex-container {
     display: flex;
-    flex-direction: column;
+    flex: 1;
+}
+
+.sidebar {
+    flex: 0 0 20vw;
+    background: #222;
+    color: white;
+    text-align: center;
+}
+
+.sidebar h1 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#animal-form {}
+
+#animal-input, #add-animal, button {
+    padding: 20px;
+}
+
+button, #add-animal {
+    background-color: #0286b2;
+    color: white;
+    border: 1px solid black;
+}
+
+button {
+    margin: 5px;
+    text-transform: capitalize;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: block;
+}
+
+#buttons-view {
+    margin-top: 50px;
+}
+
+.main {
+    flex: 1;
+}
+
+.wrapper {
+    padding: 30px;
+}
+
+.giphy {
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    transition: all .2s ease-in-out;
+}
+
+.giphy:hover {
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    transform: scale(1.1);
+}
+
+.rating {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.float-l {
+    float: left;
+    margin: 15px;
+}
+
+#attribution {
+    clear: both;
+    text-align: center;
+    margin-top: 20px;
 }
