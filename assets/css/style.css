@@ -28,6 +28,11 @@ body {
     margin-bottom: 40px;
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
 #animal-form {}
 
 #animal-input, #add-animal, button {
