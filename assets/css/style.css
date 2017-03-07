@@ -69,10 +69,13 @@ input {
     transition: all .2s ease-in-out;
 }
 
-.giphy:hover {
+.giphy-animate {
     border-radius: 2px;
     border: 1px solid #ccc;
-    transform: scale(1.1);
+    transform: scale(1.05);
+    box-shadow: 2px 2px 5px #666;
+
+
 }
 
 .rating {

@@ -1,12 +1,5 @@
 $(document).ready(function() {
 
-
-    var myGif = {
-        fixed: [],
-        gif: [],
-        rating: []
-    };
-
     var animals = {
 
         animal: ['rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake', 'horse', 'ram', 'monkey', 'dog', 'pig'],
@@ -60,40 +53,29 @@ $(document).ready(function() {
                 method: 'GET'
             }).done(function(response) {
                 $("#giphy-view").empty();
-                // made an object to store the links of the images and rating
-                myGif = {
-                    fixed: [],
-                    gif: [],
-                    rating: []
-                };
+
                 // shortcut to respsonse data callback
                 var imgUrl = response.data;
 
-                // add fixed, animated, and rating to myGif
+                // add fixed, animated, and rating to #giphy-view
                 for (var img of imgUrl) {
-                    myGif.fixed.push(img.images.fixed_height_still.url);
-                    myGif.gif.push(img.images.fixed_height.url);
-                    myGif.rating.push(img.rating);
 
-                }
-                // add images and rating to the #giphy-view
-                for (var i = 0; i < myGif.fixed.length; i++) {
-                    var div = $("<div>");
-                    div.addClass("float-l");
+                    var div = $("<div>").addClass("float-l");
+
                     var a = $("<img>");
-                    a.attr("src", myGif.fixed[i]);
-                    a.attr("data-position", i)
-                    a.attr("data-static", "true")
+                    a.attr("src", img.images.fixed_height_still.url);
+                    a.attr("data-static", img.images.fixed_height_still.url);
+                    a.attr("data-animate", img.images.fixed_height.url)
+                    a.attr("data-state", "static")
                     a.addClass("giphy");
-                    var rating = $("<p>");
-                    rating.addClass("rating")
-                    rating.text("Rating: " + myGif.rating[i]);
+
+                    var rating = $("<p>").addClass("rating").text("Rating: " + img.rating);
 
                     div.append(rating);
                     div.append(a);
                     $("#giphy-view").append(div);
-
                 }
+
                 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                     // You are in mobile browser
                     $('html, body').animate({
@@ -119,33 +101,20 @@ $(document).ready(function() {
     $(document).on("click", ".animal", animals.animalGiphy);
     // on click event for swapping fixed and animated gifs
     $(document).on("click", ".giphy", function() {
-        var idx = $(this).attr("data-position");
-        var img = $("<img>");
-        // if gif is static then make it animated else turn off animated and make it static
-        if ($(this).attr("data-static") == "true") {
+        var state = $(this).attr("data-state");
 
-            var newImgSrc = myGif.gif[idx];
-            img.attr("src", newImgSrc);
-            $(this).attr("src", newImgSrc);
-            $(this).attr("data-static", "false")
-
+        if (state === "static") {
+            $(this).attr("src", $(this).attr("data-animate"));
+                $(this).addClass("giphy-animate");
+            $(this).attr("data-state", "animate");
         } else {
-            var newImgSrc = myGif.fixed[idx];
-            img.attr("src", newImgSrc);
-            $(this).attr("src", newImgSrc);
-            $(this).attr("data-static", "true")
+            $(this).attr("src", $(this).attr("data-static"));
+  $(this).removeClass("giphy-animate");
+            $(this).attr("data-state", "static");
+
 
         }
 
-
     });
-
-
-
-
-
-
-
-
 
 });
