@@ -32,7 +32,7 @@ $(document).ready(function() {
                 //grab value from input box
                 var newAnimal = $("#animal-input").val().trim();
 
-                //now sure why cant use 'this'
+
                 animals.animal.push(newAnimal);
                 animals.renderAnimals();
                 $("#animal-input").val("");
@@ -53,7 +53,7 @@ $(document).ready(function() {
 
             var api_key = "dc6zaTOxFJmzC";
             var limit = 10;
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + myAnimal + "&limit=" + limit + "&api_key=" + api_key;
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=funny+animal+" + myAnimal + "&limit=" + limit + "&api_key=" + api_key;
 
             $.ajax({
                 url: queryURL,
@@ -94,7 +94,20 @@ $(document).ready(function() {
                     $("#giphy-view").append(div);
 
                 }
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    // You are in mobile browser
+                    $('html, body').animate({
+                        scrollTop: $("#giphy-view").offset().top
+                    }, 500);
 
+                    $('.scrollToTop').click(function() {
+                        $('html, body').animate({
+                            scrollTop: 0
+                        }, 500);
+
+                    });
+
+                }
             });
         }
     };
@@ -107,19 +120,17 @@ $(document).ready(function() {
     // on click event for swapping fixed and animated gifs
     $(document).on("click", ".giphy", function() {
         var idx = $(this).attr("data-position");
-
+        var img = $("<img>");
         // if gif is static then make it animated else turn off animated and make it static
         if ($(this).attr("data-static") == "true") {
 
             var newImgSrc = myGif.gif[idx];
-            var img = $("<img>");
             img.attr("src", newImgSrc);
             $(this).attr("src", newImgSrc);
             $(this).attr("data-static", "false")
 
         } else {
             var newImgSrc = myGif.fixed[idx];
-            var img = $("<img>");
             img.attr("src", newImgSrc);
             $(this).attr("src", newImgSrc);
             $(this).attr("data-static", "true")
