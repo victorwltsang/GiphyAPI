@@ -1,7 +1,10 @@
+// great job wrapping all of your code inside of this `$(document).ready` callback function
 $(document).ready(function() {
 
     var animals = {
-
+        // you generally want variable and property names that represent collections to be plural.
+        // For instance I think the following array should be `animals` and then you'd probably
+        // want to name the containing objectt something slightly different' perhaps `animalGiphyFactory`
         animal: ['rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake', 'horse', 'ram', 'monkey', 'dog', 'pig'],
         renderAnimals: function() {
             // remove old buttons and render new ones
@@ -25,11 +28,11 @@ $(document).ready(function() {
                 //grab value from input box
                 var newAnimal = $("#animal-input").val().trim();
 
-
-                animals.animal.push(newAnimal);
-                animals.renderAnimals();
+                
+                this.animal.push(newAnimal);
+                this.renderAnimals();
                 $("#animal-input").val("");
-                animals.animalGiphy(newAnimal)
+                this.animalGiphy(newAnimal)
             }
 
         },
@@ -40,7 +43,11 @@ $(document).ready(function() {
             var myAnimal = $(this).attr("data-animal");
 
             //replace this value if added an animal
-            if (typeof newAnimal == "string") {
+            // you should get in the habit of using strict equality checking `===` as opposed to type coercion equality checking `==`.
+            // This is because many developers who aren't intimately familiar with the difference will think misunderstand how to use them
+            // and that can lead to some very finicky bugs 🐛
+
+            if (typeof newAnimal === "string") {
                 var myAnimal = newAnimal;
             }
 
@@ -97,19 +104,25 @@ $(document).ready(function() {
     animals.renderAnimals();
 
     // Adding a click event listener to all elements with a id of "add-animal"
-    $(document).on("click", "#add-animal", animals.addAnimal);
+    // By binding the context to `animals`, you can use the more generic `this` value
+    // within your methods which gives your code more flexibility.
+    $(document).on("click", "#add-animal", animals.addAnimal.bind(animals));
     $(document).on("click", ".animal", animals.animalGiphy);
     // on click event for swapping fixed and animated gifs
     $(document).on("click", ".giphy", function() {
         var state = $(this).attr("data-state");
 
+        // you should get in the habit of using strict equality checking `===` as opposed to type coercion equality checking `==`.
+        // This is because many developers who aren't intimately familiar with the difference will think misunderstand hwo to use them
+        // and that can lead to very finicky bugs 🐛
         if (state === "static") {
             $(this).attr("src", $(this).attr("data-animate"));
                 $(this).addClass("giphy-animate");
             $(this).attr("data-state", "animate");
         } else {
             $(this).attr("src", $(this).attr("data-static"));
-  $(this).removeClass("giphy-animate");
+            // you want to keep your indentation consistent 🙃
+            $(this).removeClass("giphy-animate");
             $(this).attr("data-state", "static");
 
 
